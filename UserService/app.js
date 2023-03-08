@@ -2,13 +2,14 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const app = express()
-const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+const dotenv = require('dotenv');
 dotenv.config();
 
 const userRoutes = require('./routes/auth')
+app.use('/api/', userRoutes);
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -19,8 +20,6 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
-
-app.use('/api/', userRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);
