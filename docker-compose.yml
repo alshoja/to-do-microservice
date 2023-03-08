@@ -1,37 +1,37 @@
 version: "3"
 services:
-  todo-app:
+  tasks:
     build:
       dockerfile: Dockerfile
-      context: ./TodoService
-    container_name: TodoService
+      context: ./tasks
+    container_name: tasks
     ports:
       - "8001:8001"
     restart: always
     volumes:
       - .:/app
-      - /app/TodoService/node_modules
+      - /app/tasks/node_modules
     env_file:
-      - ./TodoService/.env
-  user-app:
+      - ./tasks/.env
+  users:
     build:
       dockerfile: Dockerfile
-      context: ./UserService
-    container_name: UserService
+      context: ./users
+    container_name: users
     ports:
       - "8002:8002"
     restart: always
     volumes:
       - .:/app
-      - /app/UserService/node_modules
+      - /app/users/node_modules
     env_file:
-      - ./UserService/.env
+      - ./users/.env
   nginx-proxy:
     build:
       dockerfile: Dockerfile
-      context: ./Proxy
+      context: ./proxy
     depends_on:
-      - user-app
-      - todo-app
+      - users
+      - tasks
     ports:
       - 80:80

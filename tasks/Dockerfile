@@ -1,6 +1,6 @@
 FROM node
 
-WORKDIR /app/TodoService
+WORKDIR /app/tasks
 
 COPY package.json .
 
