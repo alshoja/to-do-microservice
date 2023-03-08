@@ -3,6 +3,7 @@ const router = express.Router();
 
 const {
   createActivity,
+  getAllActivity
 } = require("../controllers/Activity");
 
 router.get('/', (req, res, next) => {
@@ -10,5 +11,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.post("/create", createActivity);
+router.get("/activities", getAllActivity);
+
 
 module.exports = router;

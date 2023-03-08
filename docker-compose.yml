@@ -26,6 +26,19 @@ services:
       - /app/users/node_modules
     env_file:
       - ./users/.env
+  activity:
+    build:
+      dockerfile: Dockerfile
+      context: ./activity
+    container_name: activity
+    ports:
+      - "8003:8003"
+    restart: always
+    volumes:
+      - .:/app
+      - /app/activity/node_modules
+    env_file:
+      - ./activity/.env
   nginx-proxy:
     build:
       dockerfile: Dockerfile
@@ -33,5 +46,6 @@ services:
     depends_on:
       - users
       - tasks
+      - activity
     ports:
       - 80:80
