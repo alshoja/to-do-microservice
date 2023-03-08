@@ -28,7 +28,7 @@ app.use((error, req, res, next) => {
 
 mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    app.listen(process.env.PORT, () => console.log('listening to http://localhost:' + process.env.PORT))
+    app.listen(process.env.PORT, () => console.log('Todo Service listening to http://localhost:' + process.env.PORT))
   }).catch(err => {
     console.log(err)
   });
@@ -39,4 +39,4 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // include the todoRoutes
-app.use("/api", todoRoutes);
+app.use("/", todoRoutes);

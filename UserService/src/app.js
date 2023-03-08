@@ -9,7 +9,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const userRoutes = require('./routes/user')
-app.use('/api/', userRoutes);
+app.use('/', userRoutes);
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -31,7 +31,7 @@ app.use((error, req, res, next) => {
 
 mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    app.listen(process.env.PORT, () => console.log('listening to http://localhost:' + process.env.PORT))
+    app.listen(process.env.PORT, () => console.log('User Service listening to http://localhost:' + process.env.PORT))
   }).catch(err => {
     console.log(err)
   });

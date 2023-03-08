@@ -6,6 +6,10 @@ const { body } = require('express-validator');
 const User = require('../models/user');
 const isGuarded = require('../middleware/isLoggedIn')
 
+router.get('/', (req, res, next) => {
+     res.status(200).json({ message: 'User Service Up' });
+})
+
 router.post('/login', [body('username').trim().isEmail().withMessage('Please enter a valid email.'), body('password').trim().isLength({ min: 5 }),], authController.login)
 router.get('/users', isGuarded, userController.allUsers)
 router.get('/user/:userId', isGuarded, userController.user)

@@ -12,24 +12,28 @@ const {
   updateTodo,
 } = require("../controllers/Todo");
 
+router.get('/', (req, res, next) => {
+  res.status(200).json({ message: 'Todo Service Up' });
+})
+
 //params
 // it will fetch the value from the url
 router.param("todoId", getTodoById);
 
 // to get all the todos
-router.get("/todos/", getAllTodos);
+router.get("/", getAllTodos);
 
 // to get a single todo
-router.get("/todo/:todoId/", getTodo);
+router.get("/:todoId/", getTodo);
 
 // to create a todo
-router.post("/todo/create/", createTodo);
+router.post("/create/", createTodo);
 
 // to update the todo
-router.put("/todo/:todoId/update", updateTodo);
+router.put("/:todoId/update", updateTodo);
 
 // to delete the todo
-router.delete("/todo/:todoId/delete", deleteTodo);
+router.delete("/:todoId/delete", deleteTodo);
 
 // we will export the router to import it in index.js
 module.exports = router;
