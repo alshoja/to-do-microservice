@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const dotenv = require('dotenv');
 dotenv.config();
 
-const userRoutes = require('./routes/auth')
+const userRoutes = require('./routes/user')
 app.use('/api/', userRoutes);
 
 app.use((req, res, next) => {
