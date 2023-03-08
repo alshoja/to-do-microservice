@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-const Todo = new mongoose.Schema(
+const Activity = new mongoose.Schema(
   {
-    task: {
+    activity: {
       type: String,
       required: true,
       trim: true,
@@ -14,7 +14,7 @@ const Todo = new mongoose.Schema(
       trim: true,
       maxlength: 60,
     },
-    assignee: {
+    taskId: {
       type: String,
       required: false,
       trim: true,
@@ -29,4 +29,4 @@ const Todo = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Todo", Todo);
+module.exports = mongoose.model("Activity", Activity);
