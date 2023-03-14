@@ -6,8 +6,8 @@ const todoRoutes = require("./routes/Todo");
 const dotenv = require('dotenv');
 dotenv.config();
 const { CreateChannel } = require('./util')
-const app = express();
 const channel = await CreateChannel();
+const app = express();
 
 const StartServer = async () => {
   app.use((req, res, next) => {
