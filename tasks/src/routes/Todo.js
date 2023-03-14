@@ -1,5 +1,5 @@
-const TodoModule = require("../controllers/Todo")
-module.exports = (router, channel) => {
+import TodoModule from '../controllers/Todo.js'
+export default (router, channel) => {
   const TodoController = TodoModule(channel);
   router.get("/", TodoController.getAllTodo);
   router.get("/:todoId/", TodoController.getTodo);

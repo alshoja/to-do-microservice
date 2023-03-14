@@ -1,7 +1,8 @@
 {
-  "name": "tod-rest-api",
+  "name": "task-rest-api",
   "version": "1.0.0",
-  "description": "todo rest apis",
+  "description": "tasks rest api",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/app.js"

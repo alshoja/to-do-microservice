@@ -1,6 +1,6 @@
-const Todo = require("../models/Todo");
+import Todo from "../models/Todo.js"
 
-module.exports = (channel) => {
+export default (channel) => {
   const getTodoById = (req, res, next, todoId) => {
     Todo.findById(todoId).exec((err, todo) => {
       if (err || !todo) {
