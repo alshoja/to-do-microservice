@@ -1,17 +1,10 @@
-const express = require("express");
-const router = express.Router();
+const ActivityModule = require("../controllers/Activity");
 
-const {
-  createActivity,
-  getAllActivity
-} = require("../controllers/Activity");
-
-router.get('/', (req, res, next) => {
-  res.status(200).json({ message: 'Activity Service Up' });
-})
-
-router.post("/create", createActivity);
-router.get("/activities", getAllActivity);
+module.exports = (router, channel) => {
+  const ActivityController = ActivityModule(channel)
+  router.get('/', ActivityController.status)
+  router.post("/create", ActivityController.createActivity);
+  router.get("/activities", ActivityController.getAllActivity);
+}
 
 
-module.exports = router;

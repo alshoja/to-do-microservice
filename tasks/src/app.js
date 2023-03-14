@@ -1,4 +1,3 @@
-// import all the necessary packages
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -8,6 +7,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const { CreateChannel } = require('./util')
 const app = express();
+const channel = await CreateChannel();
 
 const StartServer = async () => {
   app.use((req, res, next) => {
@@ -20,7 +20,6 @@ const StartServer = async () => {
     next();
   });
 
-
   app.use((error, req, res, next) => {
     console.log(error);
     const status = error.statusCode || 500;
@@ -28,7 +27,6 @@ const StartServer = async () => {
     res.status(status).json({ message: message });
   });
 
-  const channel = await CreateChannel();
 
   mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -37,9 +35,7 @@ const StartServer = async () => {
       console.log(err)
     });
 
-  // middleware for cors to allow cross origin resource sharing
   app.use(cors());
-  // middleware to convert our request data into JSON format
   app.use(bodyParser.json());
 
   todoRoutes(app, channel);

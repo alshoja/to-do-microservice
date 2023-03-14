@@ -1,16 +1,12 @@
-/* eslint-disable no-unused-vars */
 const express = require('express');
 const bodyParser = require('body-parser')
-const app = express()
 const mongoose = require('mongoose');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 const dotenv = require('dotenv');
 dotenv.config();
+const app = express()
 
 const userRoutes = require('./routes/user')
 app.use('/', userRoutes);
-
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
@@ -28,7 +24,8 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message });
 });
 
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     app.listen(process.env.PORT, () => console.log('User Service listening to http://localhost:' + process.env.PORT))

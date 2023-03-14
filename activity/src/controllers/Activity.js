@@ -1,29 +1,37 @@
 const Activity = require("../models/Activity");
+module.exports = (channel) => {
+  const status = (req, res) => {
+    res.status(200).json({ message: 'Activity Service Up' });
+  }
 
-exports.createActivity = (req, res) => {
-  const activity = new Activity(req.body);
-  activity.save((err, task) => {
-    if (err || !task) {
-      return res.status(400).json({
-        error: "something went wrong",
-      });
-    }
-    res.json({ task });
-  });
-};
-
-exports.getAllActivity = (req, res) => {
-  // simply use .find() method and it will return all the todos
-  Activity.find()
-    .sort("-createdAt")
-    .exec((err, todos) => {
-      // error checking
-      if (err || !todos) {
+  const createActivity = (req, res) => {
+    const activity = new Activity(req.body);
+    activity.save((err, task) => {
+      if (err || !task) {
         return res.status(400).json({
-          error: "Something went wrong in finding all todos",
+          error: "something went wrong",
         });
       }
-      // return all the todos in json format
-      res.json(todos);
+      res.json({ task });
     });
-};
+  };
+
+  const getAllActivity = (req, res) => {
+    Activity.find()
+      .sort("-createdAt")
+      .exec((err, todos) => {
+        if (err || !todos) {
+          return res.status(400).json({
+            error: "Something went wrong in finding all todos",
+          });
+        }
+        res.json(todos);
+      });
+  };
+
+  return {
+    status,
+    createActivity,
+    getAllActivity
+  }
+}
