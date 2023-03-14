@@ -17,7 +17,10 @@ const Server = async () => {
     const channel = await CreateChannel();
     routes(app, channel);
     await mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    app.listen(process.env.PORT, () => console.log('Tasks Service listening to http://localhost:' + process.env.PORT))
+    app.listen(process.env.PORT, () => {
+      console.log('Tasks Service listening to http://localhost:' + process.env.PORT)
+      console.log('Database connected')
+    })
   } catch (error) {
     console.log(error)
   }
