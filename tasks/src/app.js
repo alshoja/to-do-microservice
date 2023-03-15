@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import routes from './routes/Todo.js';
+import routes from './routes/index.js';
 import bodyParser from 'body-parser';
 import env from 'dotenv';
 import { CreateChannel, headers, error } from './util/index.js';
