@@ -1,5 +1,5 @@
-const Activity = require("../models/Activity");
-module.exports = (channel) => {
+import Activity from "../models/Activity.js";
+export default (channel) => {
   const status = (req, res) => {
     res.status(200).json({ message: 'Activity Service Up' });
   }

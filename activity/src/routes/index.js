@@ -1,6 +1,6 @@
-const ActivityModule = require("../controllers/Activity");
+import ActivityModule from "../controllers/Activity.js";
 
-module.exports = (router, channel) => {
+export default (router, channel) => {
   const ActivityController = ActivityModule(channel)
   router.get('/', ActivityController.status)
   router.post("/create", ActivityController.createActivity);
