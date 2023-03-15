@@ -1,8 +1,8 @@
-const User = require("../models/user");
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import User from '../models/user.js'
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
-module.exports = (channel) => {
+export default (channel) => {
     const login = (req, res, next) => {
         let loadedUser;
         User.findOne({ username: req.body.username })

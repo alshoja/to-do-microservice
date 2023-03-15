@@ -2,6 +2,7 @@
   "name": "user-service",
   "version": "1.0.0",
   "description": "User service for to app",
+  "type": "module",
   "main": "app.js",
   "dependencies": {
     "amqplib": "^0.10.3",

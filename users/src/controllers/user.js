@@ -1,7 +1,8 @@
-const User = require('../models/user');
-const { validationResult } = require('express-validator');
-const bcrypt = require('bcryptjs');
-module.exports = (channel) => {
+import User from '../models/user.js'
+import { validationResult } from 'express-validator';
+import bcrypt from 'bcryptjs';
+
+export default (channel) => {
     const status = (req, res, next) => {
         res.status(200).json({ message: 'User Service Up' });
     }

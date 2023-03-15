@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
-const jwt = require('jsonwebtoken');
-module.exports = (req, res, next) => {
+import jwt from 'jsonwebtoken';
+export default (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
         const error = new Error('Not authenticated');

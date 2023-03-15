@@ -1,10 +1,10 @@
+import  { body } from 'express-validator';
+import isGuarded from '../middleware/isLoggedIn.js';
+import User from '../models/user.js';
+import userModule from '../controllers/user.js';
+import authModule from '../controllers/auth.js';
 
-const userModule = require('../controllers/user');
-const authModule = require('../controllers/auth');
-const { body } = require('express-validator');
-const User = require('../models/user');
-const isGuarded = require('../middleware/isLoggedIn')
-module.exports = (router, channel) => {
+export default (router, channel) => {
     const userController = userModule(channel)
     const authController = authModule(channel)
     router.get('/', userController.status)
@@ -15,7 +15,6 @@ module.exports = (router, channel) => {
         ],
         authController.login
     );
-
     router.get('/users', isGuarded, userController.allUsers)
     router.get('/user/:userId', isGuarded, userController.user)
     router.post('/user/create', [
