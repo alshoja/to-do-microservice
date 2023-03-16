@@ -12,11 +12,11 @@ const Server = async () => {
   env.config();
   try {
     app.use(headers);
-    app.use(error);
     app.use(cors());
     app.use(bodyParser.json());
     const channel = await CreateChannel();
     routes(app, channel);
+    app.use(error);
     await mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     app.listen(process.env.PORT, () => {
       console.log('Activity Service listening to http://localhost:' + process.env.PORT)
