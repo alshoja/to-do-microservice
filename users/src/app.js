@@ -20,7 +20,7 @@ const Server = async () => {
     await mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     app.listen(process.env.PORT, () => {
       console.log('User Service listening to http://localhost:' + process.env.PORT)
-      console.log('Database connected')
+      console.log('User Database connected')
     })
   } catch (error) {
     console.log(error)
