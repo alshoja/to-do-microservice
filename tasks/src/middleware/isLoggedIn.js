@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 export default (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-        const error = new Error('Not authenticated');
+        const error = new Error('Authorization error');
         error.statusCode = 401;
         throw error;
     }
@@ -15,7 +15,7 @@ export default (req, res, next) => {
         throw err;
     }
     if (!decodedToken) {
-        const error = new Error('Not authenticated');
+        const error = new Error('Authorization error');
         error.statusCode = 401;
         throw error;
     }
