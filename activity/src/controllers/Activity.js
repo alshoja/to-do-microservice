@@ -1,4 +1,4 @@
-import { SubscribeMessage } from "../../../tasks/src/util/index.js";
+import { SubscribeMessage } from "../util/index.js";
 import Activity from "../models/Activity.js";
 export default function (channel) {
   const status = (req, res) => {
