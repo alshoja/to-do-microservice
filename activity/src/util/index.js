@@ -22,8 +22,7 @@ const SubscribeMessage = async (channel, service, binding_key) => {
     const appQueue = await channel.assertQueue(process.env.QUEUE_NAME);
     channel.bindQueue(appQueue.queue, process.env.EXCHANGE_NAME, binding_key);
     channel.consume(appQueue.queue, data => {
-        console.log('data received ');
-        console.log(data.content.toString())
+        console.log('data received in activity', data.content.toString())
         channel.ack(data);
     })
 

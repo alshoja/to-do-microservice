@@ -1,6 +1,7 @@
 import Todo from "../models/Todo.js"
+import { PublishMessage, SubscribeMessage } from "../util/index.js"
 
-export default (channel) => {
+export default function (channel) {
   const getTodoById = (req, res, next, todoId) => {
     Todo.findById(todoId).exec((err, todo) => {
       if (err || !todo) {
@@ -33,13 +34,13 @@ export default (channel) => {
 
   const createTodo = (req, res) => {
     const todo = new Todo(req.body);
-
     todo.save((err, task) => {
       if (err || !task) {
         return res.status(400).json({
           error: "something went wrong",
         });
       }
+      PublishMessage(channel, 'ACTIVITY_BINDING_KEY', JSON.stringify(task))
       res.json({ task });
     });
   };
@@ -72,6 +73,14 @@ export default (channel) => {
       });
     });
   };
+
+  const SubscribeEvents = async (payload) => {
+    console.log('Triggering.... Customer Events')
+    payload = JSON.parse(payload)
+    console.log('payload from rabbit', payload)
+  }
+
+  SubscribeMessage(channel, SubscribeEvents, 'TASK_BINDING_KEY')
 
   return {
     getTodoById,

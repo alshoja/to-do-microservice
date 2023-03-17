@@ -19,14 +19,13 @@ const PublishMessage = async (channel, binding_key, message) => {
 }
 
 const SubscribeMessage = async (channel, service, binding_key) => {
+    console.log('Subscribing to', service);
     const appQueue = await channel.assertQueue(process.env.QUEUE_NAME);
     channel.bindQueue(appQueue.queue, process.env.EXCHANGE_NAME, binding_key);
     channel.consume(appQueue.queue, data => {
-        console.log('data received ');
-        console.log(data.content.toString())
+        console.log('data received in task', data.content.toString())
         channel.ack(data);
     })
-
 }
 
 const headers = (req, res, next) => {
