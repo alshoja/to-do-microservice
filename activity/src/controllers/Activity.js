@@ -5,19 +5,23 @@ export default function (channel) {
     res.status(200).json({ message: 'Activity Service Up' });
   }
 
-  const createActivity = (req, res) => {
-    const activity = new Activity(req.body);
+  const createActivity = (task) => {
+    const body = {
+      activity: 'Created', description: 'who added ' + task.task, taskId: task._id, owner: task.owner
+    }
+    const activity = new Activity(body);
     activity.save((err, task) => {
       if (err || !task) {
         return res.status(400).json({
           error: "something went wrong",
         });
       }
-      res.json({ task });
+      // res.json({ task });
     });
   };
 
   const getAllActivity = (req, res) => {
+    console.log('getting all activities')
     Activity.find()
       .sort("-createdAt")
       .exec((err, todos) => {
@@ -31,15 +35,16 @@ export default function (channel) {
   };
 
   const SubscribeEvents = async (payload) => {
-    console.log('Triggering.... Customer Events')
+    console.log('Triggering.... activity Events')
     payload = JSON.parse(payload)
     console.log('payload from rabbit', payload)
+    createActivity(payload);
   }
 
-  SubscribeMessage(channel, SubscribeEvents, 'ACTIVITY_BINDING_KEY')
+  SubscribeMessage(channel, SubscribeEvents, 'ACTIVITY_BINDING_KEY');
+
   return {
     status,
-    createActivity,
     getAllActivity
   }
 }

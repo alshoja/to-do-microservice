@@ -75,7 +75,7 @@ export default function (channel) {
   };
 
   const SubscribeEvents = async (payload) => {
-    console.log('Triggering.... Customer Events')
+    console.log('Triggering.... Task Events')
     payload = JSON.parse(payload)
     console.log('payload from rabbit', payload)
   }

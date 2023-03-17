@@ -23,6 +23,7 @@ const SubscribeMessage = async (channel, service, binding_key) => {
     channel.bindQueue(appQueue.queue, process.env.EXCHANGE_NAME, binding_key);
     channel.consume(appQueue.queue, data => {
         console.log('data received in users', data.content.toString())
+        service(data.content.toString());
         channel.ack(data);
     })
 
