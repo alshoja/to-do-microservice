@@ -9,7 +9,6 @@ const getChannel = async () => {
   return await amqplibConnection.createChannel();
 };
 
-
 const CreateChannel = async () => {
   try {
     const channel = await getChannel()
@@ -37,23 +36,6 @@ const SubscribeMessage = async (channel, service, binding_key) => {
     channel.ack(data);
   })
 
-}
-
-const headers = (req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'OPTIONS, GET, POST, PUT, PATCH, DELETE'
-  );
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-}
-
-const error = (error, req, res, next) => {
-  console.log(error);
-  const status = error.statusCode || 500;
-  const message = error.message;
-  res.status(status).json({ message, status });
 }
 
 const requestData = async (RPC_QUEUE_NAME, requestPayload, uuid) => {
@@ -99,6 +81,23 @@ const RPCRequest = async (RPC_QUEUE_NAME, requestPayload) => {
   const uuid = uuid4(); // correlationId
   return await requestData(RPC_QUEUE_NAME, requestPayload, uuid);
 };
+
+const headers = (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'OPTIONS, GET, POST, PUT, PATCH, DELETE'
+  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+}
+
+const error = (error, req, res, next) => {
+  console.log(error);
+  const status = error.statusCode || 500;
+  const message = error.message;
+  res.status(status).json({ message, status });
+}
 
 
 export {
