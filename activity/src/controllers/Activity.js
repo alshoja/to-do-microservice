@@ -1,15 +1,20 @@
-import { SubscribeMessage } from "../util/index.js";
+import { RPCRequest, SubscribeMessage } from "../util/index.js";
 import Activity from "../models/Activity.js";
 export default function (channel) {
   const status = (req, res) => {
     res.status(200).json({ message: 'Activity Service Up' });
   }
 
-  const createActivity = (task) => {
-    const body = {
-      activity: 'Created', description: 'who added ' + task.task, taskId: task._id, owner: task.owner
+  const createActivity = async (task) => {
+    const { name } = await RPCRequest('USER_RPC', {
+      data: task.owner
+    });
+    const fullPayload = {
+      activity: 'Created', description: name + ' added ' + task.task, taskId: task._id, owner: task.owner
     }
-    const activity = new Activity(body);
+    console.log("🚀 ~ file: Activity.js:16 ~ createActivity ~ fullPayload:", fullPayload)
+
+    const activity = new Activity(fullPayload);
     activity.save((err, task) => {
       if (err || !task) {
         return res.status(400).json({
@@ -37,7 +42,7 @@ export default function (channel) {
   const SubscribeEvents = async (payload) => {
     console.log('Triggering.... activity Events')
     payload = JSON.parse(payload)
-    console.log('payload from rabbit', payload)
+    console.log('payload from rabbit', payload);
     createActivity(payload);
   }
 

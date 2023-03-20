@@ -1,6 +1,7 @@
 import User from '../models/user.js'
 import { validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
+import { RPCObserver, SubscribeMessage } from '../util/index.js';
 
 export default (channel) => {
     const status = (req, res, next) => {
@@ -103,6 +104,38 @@ export default (channel) => {
         })
     }
 
+    const SubscribeEvents = async (payload) => {
+        console.log('Triggering.... activity Events')
+        payload = JSON.parse(payload)
+        console.log('payload from rabbit', payload)
+        // createActivity(payload);
+    }
+
+
+    const findById = async (id) => {
+        try {
+            const user = User.findById(id);
+            if (!user) {
+                const error = new Error('No user found');
+                error.statusCode = 404;
+                throw error;
+            }
+            return user
+        } catch (error) {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+        }
+
+    }
+
+    const serveRPCRequest = async (payload) => {
+        const userId = payload.data
+        return await findById(userId);
+    }
+
+    RPCObserver(process.env.RPC_QUEUE_NAME, serveRPCRequest);
+    SubscribeMessage(channel, SubscribeEvents, process.env.USER_BINDING_KEY)
     return {
         allUsers,
         user,
